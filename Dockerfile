@@ -22,5 +22,5 @@ RUN apt -y install python3.10-dev emacs-nox tmux silversearcher-ag ruby
 
 RUN rm -rf /usr/local/lib/python3.10/dist-packages/bitsandbytes-0.38.1.dist-info
 RUN pip uninstall -y bitsandbytes torch
-RUN pip install --no-cache-dir --upgrade torch torchvision torchaudio langchain openai Mastodon.py tiktoken unstructured tabulate pdf2image libmagic wandb loralib bitsandbytes==0.39.1
+RUN pip install --no-cache-dir --upgrade torch torchvision torchaudio langchain openai Mastodon.py tiktoken unstructured tabulate pdf2image libmagic wandb loralib scipy bitsandbytes==0.39.1
 RUN pip install xformers
