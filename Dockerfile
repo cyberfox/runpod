@@ -49,6 +49,6 @@ CMD ["/start.sh"]
 
 WORKDIR /text-generation-webui
 
-COPY start.sh /
+COPY --chmod=0755 start.sh /
 
 ENTRYPOINT ["/opt/nvidia/nvidia_entrypoint.sh"]
