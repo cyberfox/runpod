@@ -1,4 +1,4 @@
-FROM cyberfox/runpod-oobabooga:1.0
+FROM cyberfox/runpod-oobabooga:latest
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -51,6 +51,7 @@ WORKDIR /text-generation-webui
 
 COPY --chmod=0755 start.sh /
 COPY --chmod=0664 requirements.txt /
-RUN pip install -r /requirements.txt
+RUN python3 -m pip install --upgrade pip &&\
+    pip install -r /requirements.txt
 
 ENTRYPOINT ["/opt/nvidia/nvidia_entrypoint.sh"]
