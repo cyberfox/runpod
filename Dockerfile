@@ -51,7 +51,11 @@ WORKDIR /text-generation-webui
 
 COPY --chmod=0755 start.sh /
 COPY --chmod=0664 requirements.txt /
-RUN python3 -m pip install --upgrade pip &&\
-    pip install -r /requirements.txt
+RUN conda create --clone base -n textgen &&\
+    conda activate textgen &&\
+    python3 -m pip install --upgrade pip &&\
+    pip install -r /requirements.txt &&\
+    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121 &&\
+    conda install -y -c "nvidia/label/cuda-12.1.0" cuda-runtime
 
 ENTRYPOINT ["/opt/nvidia/nvidia_entrypoint.sh"]

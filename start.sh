@@ -33,6 +33,9 @@ done
 
 cd /workspace/text-generation-webui/
 
+echo "Switching to textgen"
+conda activate textgen
+
 if [ ! -z "$LOAD_MODEL" ] && [ "$LOAD_MODEL" != "PygmalionAI/pygmalion-6b" ]; then
     rm -rf /text-generation-webui/models/pygmalion-6b
     python /text-generation-webui/download-model.py $LOAD_MODEL
