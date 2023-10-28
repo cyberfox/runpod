@@ -2,7 +2,7 @@ FROM cyberfox/runpod-oobabooga:latest
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-ENV PATH=/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ENV PATH=/root/miniconda3/bin:/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 ENV NVARCH=x86_64
 ENV NVIDIA_REQUIRE_CUDA="cuda>=11.6 brand=tesla,driver>=418,driver<419 brand=tesla,driver>=450,driver<451 brand=tesla,driver>=470,driver<471 brand=unknown,driver>=470,driver<471 brand=nvidia,driver>=470,driver<471 brand=nvidiartx,driver>=470,driver<471 brand=geforce,driver>=470,driver<471 brand=geforcertx,driver>=470,driver<471 brand=quadro,driver>=470,driver<471 brand=quadrortx,driver>=470,driver<471 brand=titan,driver>=470,driver<471 brand=titanrtx,driver>=470,driver<471"
 ENV NV_CUDA_CUDART_VERSION=11.6.55-1
@@ -58,11 +58,11 @@ RUN mkdir -p ~/miniconda3 &&\
     rm -rf ~/miniconda3/miniconda.sh &&\
     ~/miniconda3/bin/conda init bash &&\
     source ~/.bashrc &&\
-    conda create --clone base -n textgen &&\
-    conda activate textgen &&\
+    ~/miniconda3/bin/conda create --clone base -n textgen &&\
+    PATH=/root/miniconda3/bin:$PATH conda activate textgen &&\
     python3 -m pip install --upgrade pip &&\
     pip install -r /requirements.txt &&\
     pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121 &&\
-    conda install -y -c "nvidia/label/cuda-12.1.0" cuda-runtime
+    PATH=/root/miniconda3/bin:$PATH conda install -y -c "nvidia/label/cuda-12.1.0" cuda-runtime
 
 ENTRYPOINT ["/opt/nvidia/nvidia_entrypoint.sh"]
