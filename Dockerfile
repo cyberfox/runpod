@@ -52,17 +52,18 @@ WORKDIR /text-generation-webui
 COPY --chmod=0755 start.sh /
 COPY --chmod=0664 requirements.txt /
 
+ARG PATH="/root/miniconda3/bin:$PATH"
 RUN mkdir -p ~/miniconda3 &&\
     wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh &&\
     bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3 &&\
     rm -rf ~/miniconda3/miniconda.sh &&\
     ~/miniconda3/bin/conda init bash &&\
-    source ~/.bashrc &&\
-    ~/miniconda3/bin/conda create --clone base -n textgen &&\
-    PATH=/root/miniconda3/bin:$PATH conda activate textgen &&\
+    ~/miniconda3/bin/conda create --clone base -n textgen
+
+RUN conda activate textgen &&\
     python3 -m pip install --upgrade pip &&\
     pip install -r /requirements.txt &&\
     pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121 &&\
-    PATH=/root/miniconda3/bin:$PATH conda install -y -c "nvidia/label/cuda-12.1.0" cuda-runtime
+    conda install -y -c "nvidia/label/cuda-12.1.0" cuda-runtime
 
 ENTRYPOINT ["/opt/nvidia/nvidia_entrypoint.sh"]
