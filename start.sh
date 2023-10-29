@@ -33,9 +33,13 @@ done
 
 cd /workspace/text-generation-webui/
 
+echo "Loading Conda into the script"
+source ~/miniconda3/etc/profile.d/conda.sh
+
 echo "Switching to textgen"
 conda activate textgen
 
+# Should default to ehartford/dolphin-2.1-mistral-7b
 if [ ! -z "$LOAD_MODEL" ] && [ "$LOAD_MODEL" != "PygmalionAI/pygmalion-6b" ]; then
     rm -rf /text-generation-webui/models/pygmalion-6b
     python /text-generation-webui/download-model.py $LOAD_MODEL
