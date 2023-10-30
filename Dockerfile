@@ -1,4 +1,4 @@
-FROM cyberfox/runpod-oobabooga:latest
+FROM cyberfox/runpod-oobabooga:alpha
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -54,13 +54,13 @@ COPY --chmod=0664 requirements.txt /
 COPY --chmod=0755 textgen_setup.sh /
 
 ARG PATH="/root/miniconda3/bin:$PATH"
-RUN mkdir -p ~/miniconda3 &&\
-    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh &&\
-    bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3 &&\
-    rm -rf ~/miniconda3/miniconda.sh &&\
-    ~/miniconda3/bin/conda init bash &&\
-    ~/miniconda3/bin/conda create --clone base -n textgen
+#RUN mkdir -p ~/miniconda3 &&\
+#    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh &&\
+#    bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3 &&\
+#    rm -rf ~/miniconda3/miniconda.sh &&\
+#    ~/miniconda3/bin/conda init bash &&\
+#    ~/miniconda3/bin/conda create --clone base -n textgen
 
-RUN /textgen_setup.sh
+#RUN /textgen_setup.sh
 
 ENTRYPOINT ["/opt/nvidia/nvidia_entrypoint.sh"]
