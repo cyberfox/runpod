@@ -38,6 +38,7 @@ source ~/miniconda3/etc/profile.d/conda.sh
 
 echo "Switching to textgen"
 conda activate textgen
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/root/miniconda3/envs/textgen/lib
 
 # Should default to ehartford/dolphin-2.1-mistral-7b
 if [ ! -z "$LOAD_MODEL" ] && [ "$LOAD_MODEL" != "PygmalionAI/pygmalion-6b" ]; then

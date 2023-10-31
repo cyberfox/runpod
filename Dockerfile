@@ -1,4 +1,4 @@
-FROM cyberfox/runpod-oobabooga:alpha
+FROM cyberfox/runpod-oobabooga:latest
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -8,7 +8,7 @@ ENV NVIDIA_REQUIRE_CUDA="cuda>=11.6 brand=tesla,driver>=418,driver<419 brand=tes
 ENV NV_CUDA_CUDART_VERSION=11.6.55-1
 ENV NV_CUDA_COMPAT_PACKAGE=cuda-compat-11-6
 ENV CUDA_VERSION=11.6.2
-ENV LD_LIBRARY_PATH=/usr/local/nvidia/lib:/usr/local/nvidia/lib64
+ENV LD_LIBRARY_PATH=/usr/local/nvidia/lib:/usr/local/nvidia/lib64:/root/miniconda3/envs/textgen/lib
 ENV NVIDIA_VISIBLE_DEVICES=all
 ENV NVIDIA_DRIVER_CAPABILITIES=compute,utility
 ENV NV_CUDA_LIB_VERSION=11.6.2-1
@@ -52,6 +52,7 @@ WORKDIR /text-generation-webui
 COPY --chmod=0755 start.sh /
 COPY --chmod=0664 requirements.txt /
 COPY --chmod=0755 textgen_setup.sh /
+COPY --chmod=0755 jupyter_setup.sh /
 
 ARG PATH="/root/miniconda3/bin:$PATH"
 #RUN mkdir -p ~/miniconda3 &&\
@@ -62,5 +63,6 @@ ARG PATH="/root/miniconda3/bin:$PATH"
 #    ~/miniconda3/bin/conda create --clone base -n textgen
 
 #RUN /textgen_setup.sh
+RUN /jupyter_setup.sh
 
 ENTRYPOINT ["/opt/nvidia/nvidia_entrypoint.sh"]
