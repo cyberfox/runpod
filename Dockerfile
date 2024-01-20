@@ -63,6 +63,6 @@ ARG PATH="/root/miniconda3/bin:$PATH"
 #    ~/miniconda3/bin/conda create --clone base -n textgen
 
 #RUN /textgen_setup.sh
-RUN /jupyter_setup.sh
+#RUN /jupyter_setup.sh
 
 ENTRYPOINT ["/opt/nvidia/nvidia_entrypoint.sh"]
