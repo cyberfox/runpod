@@ -23,7 +23,7 @@ then
     service ssh start
 fi
 
-for i in .gitconfig .bashrc .netrc
+for i in .gitconfig .bashrc .netrc .tmux.conf
 do
     if [ -e /workspace/$i ]
     then
@@ -34,31 +34,12 @@ done
 cd /workspace/text-generation-webui/
 
 echo "Loading Conda into the script"
-source ~/miniconda3/etc/profile.d/conda.sh
+source miniconda3/etc/profile.d/conda.sh
 
 echo "Switching to textgen"
 conda activate textgen
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/root/miniconda3/envs/textgen/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/workspace/miniconda3/envs/textgen/lib
 
-# Should default to ehartford/dolphin-2.1-mistral-7b
-if [ ! -z "$LOAD_MODEL" ] && [ "$LOAD_MODEL" != "PygmalionAI/pygmalion-6b" ]; then
-    rm -rf /text-generation-webui/models/pygmalion-6b
-    python /text-generation-webui/download-model.py $LOAD_MODEL
-fi
-
-if [[ $JUPYTER_PASSWORD ]]
-then
-  echo "Launching Jupyter Lab"
-  cd /
-  nohup jupyter lab --allow-root --no-browser --port=8888 --ip=* --ServerApp.token=$JUPYTER_PASSWORD --ServerApp.allow_origin=* --ServerApp.preferred_dir=/workspace &
-fi
-
-echo "Launching Server"
-#python server.py --listen # runs Oobabooga text generation webui on port 7860
-if [ "$WEBUI" == "chatbot" ]; then
-    /workspace/text-generation-webui/start_chatbot_server.sh
-else
-    /workspace/text-generation-webui/start_textgen_server.sh
-fi
+tmux new-session -d -s MLSession
 
 sleep infinity

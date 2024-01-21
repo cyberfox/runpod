@@ -53,6 +53,7 @@ COPY --chmod=0755 start.sh /
 COPY --chmod=0664 requirements.txt /
 COPY --chmod=0755 textgen_setup.sh /
 COPY --chmod=0755 jupyter_setup.sh /
+COPY --chmod=0664 tmux.conf /root/.tmux.conf
 
 ARG PATH="/root/miniconda3/bin:$PATH"
 #RUN mkdir -p ~/miniconda3 &&\
