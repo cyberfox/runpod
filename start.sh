@@ -34,7 +34,7 @@ done
 cd /workspace/text-generation-webui/
 
 echo "Loading Conda into the script"
-source miniconda3/etc/profile.d/conda.sh
+source ~/miniconda3/etc/profile.d/conda.sh
 
 echo "Switching to textgen"
 conda activate textgen
